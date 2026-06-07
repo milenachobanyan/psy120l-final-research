@@ -1,0 +1,1840 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Milena Chobanyan">
+
+<title>relationship_pursuit_study</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="relationship_study_files/libs/clipboard/clipboard.min.js"></script>
+<script src="relationship_study_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="relationship_study_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="relationship_study_files/libs/quarto-html/popper.min.js"></script>
+<script src="relationship_study_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="relationship_study_files/libs/quarto-html/anchor.min.js"></script>
+<link href="relationship_study_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="relationship_study_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="relationship_study_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="relationship_study_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="relationship_study_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">relationship_pursuit_study</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Milena Chobanyan </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="preparing-report" class="level2">
+<h2 class="anchored" data-anchor-id="preparing-report">Preparing Report</h2>
+</section>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>The goal is to convert the raw data-set into an analysis-ready dataset by loading data, defining variables, cleaning responses, and constructing a scale score.</p>
+</section>
+<section id="software-installations" class="level2">
+<h2 class="anchored" data-anchor-id="software-installations">Software Installations</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)  </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(afex) </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans) </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(svglite)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="uploading-data" class="level2">
+<h2 class="anchored" data-anchor-id="uploading-data">Uploading Data</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/relationship_pursuit_copy.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">check =</span> Q8)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "ResponseId"           "DistributionChannel"  "consent"             
+ [4] "Long_Term_Traits_1"   "Long_Term_Traits_2"   "Long_Term_Traits_3"  
+ [7] "Long_Term_Traits_4"   "Long_Term_Traits_5"   "Long_Term_Traits_6"  
+[10] "Long_Term_Traits_7"   "Long_Term_Traits_8"   "Long_Term_Traits_9"  
+[13] "Long_Term_Traits_10"  "Short_Term_Traits_1"  "Short_Term_Traits_2" 
+[16] "Short_Term_Traits_3"  "Short_Term_Traits_4"  "Short_Term_Traits_5" 
+[19] "Short_Term_Traits_6"  "Short_Term_Traits_7"  "Short_Term_Traits_8" 
+[22] "Short_Term_Traits_9"  "Short_Term_Traits_10" "check"               
+[25] "Commit_1"             "Commit_2"             "Commit_3"            
+[28] "Commit_4"             "Commit_5"             "Commit_6"            
+[31] "Commit_7"             "Commit_8"             "age"                 
+[34] "sex"                  "condition"           </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter out ppl who didn't answer commit questions</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">if_all</span>(check<span class="sc">:</span>condition, <span class="sc">~</span> <span class="sc">!</span><span class="fu">is.na</span>(.)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         ResponseId DistributionChannel consent Long_Term_Traits_1
+1 R_5DqGp4GTVji5429               email       1                 NA
+2 R_5FjKOfButJD41aN               email       1                  7
+3 R_12EXz22UaRf8Dxe               email       1                 NA
+4 R_10wYoD2Qcwnt2TQ           anonymous       1                 NA
+5 R_3EiuvYYtLIorhAu           anonymous       1                  7
+6 R_1MSSHU33Vszbk6y           anonymous       1                  7
+  Long_Term_Traits_2 Long_Term_Traits_3 Long_Term_Traits_4 Long_Term_Traits_5
+1                 NA                 NA                 NA                 NA
+2                  7                  7                  4                  7
+3                 NA                 NA                 NA                 NA
+4                 NA                 NA                 NA                 NA
+5                  7                  4                  4                  7
+6                  7                  5                  4                  7
+  Long_Term_Traits_6 Long_Term_Traits_7 Long_Term_Traits_8 Long_Term_Traits_9
+1                 NA                 NA                 NA                 NA
+2                  6                  6                  6                  7
+3                 NA                 NA                 NA                 NA
+4                 NA                 NA                 NA                 NA
+5                  4                  6                  7                  7
+6                  5                  6                  6                  6
+  Long_Term_Traits_10 Short_Term_Traits_1 Short_Term_Traits_2
+1                  NA                   5                   5
+2                   5                  NA                  NA
+3                  NA                   1                   2
+4                  NA                   6                   6
+5                   4                  NA                  NA
+6                   4                  NA                  NA
+  Short_Term_Traits_3 Short_Term_Traits_4 Short_Term_Traits_5
+1                   5                   3                   3
+2                  NA                  NA                  NA
+3                   5                   5                   7
+4                   5                   5                   4
+5                  NA                  NA                  NA
+6                  NA                  NA                  NA
+  Short_Term_Traits_6 Short_Term_Traits_7 Short_Term_Traits_8
+1                   5                   5                   6
+2                  NA                  NA                  NA
+3                   3                   1                   1
+4                   4                   7                   6
+5                  NA                  NA                  NA
+6                  NA                  NA                  NA
+  Short_Term_Traits_9 Short_Term_Traits_10 check Commit_1 Commit_2 Commit_3
+1                   6                    3     2        5        3        4
+2                  NA                   NA     1        3        5        3
+3                   4                    3     2        7        1        7
+4                   6                    5     2        5        5        3
+5                  NA                   NA     1        7        1        4
+6                  NA                   NA     1        7        1        4
+  Commit_4 Commit_5 Commit_6 Commit_7 Commit_8 age sex  condition
+1        3        5        3        5        3  20   2 Short-term
+2        5        3        6        4        6  22   2  Long-term
+3        2        7        1        6        1  22   2 Short-term
+4        4        4        5        3        5  21   2 Short-term
+5        1        6        1        6        1  21   2  Long-term
+6        1        7        4        6        3  20   1  Long-term</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 61 35</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "ResponseId"           "DistributionChannel"  "consent"             
+ [4] "Long_Term_Traits_1"   "Long_Term_Traits_2"   "Long_Term_Traits_3"  
+ [7] "Long_Term_Traits_4"   "Long_Term_Traits_5"   "Long_Term_Traits_6"  
+[10] "Long_Term_Traits_7"   "Long_Term_Traits_8"   "Long_Term_Traits_9"  
+[13] "Long_Term_Traits_10"  "Short_Term_Traits_1"  "Short_Term_Traits_2" 
+[16] "Short_Term_Traits_3"  "Short_Term_Traits_4"  "Short_Term_Traits_5" 
+[19] "Short_Term_Traits_6"  "Short_Term_Traits_7"  "Short_Term_Traits_8" 
+[22] "Short_Term_Traits_9"  "Short_Term_Traits_10" "check"               
+[25] "Commit_1"             "Commit_2"             "Commit_3"            
+[28] "Commit_4"             "Commit_5"             "Commit_6"            
+[31] "Commit_7"             "Commit_8"             "age"                 
+[34] "sex"                  "condition"           </code></pre>
+</div>
+</div>
+</section>
+<section id="variable-preparation-and-scale-construction" class="level2">
+<h2 class="anchored" data-anchor-id="variable-preparation-and-scale-construction">Variable Preparation and Scale Construction</h2>
+<section id="define-the-study-variable-list" class="level5">
+<h5 class="anchored" data-anchor-id="define-the-study-variable-list">Define the Study Variable List</h5>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a vector of variables included in the study</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>study_vars <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"condition"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"check"</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sex"</span>,       <span class="co"># participant sex</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"age"</span>,       <span class="co"># participant age</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Commit_1"</span>,<span class="st">"Commit_2"</span>,<span class="st">"Commit_3"</span>,<span class="st">"Commit_4"</span>,<span class="st">"Commit_5"</span>,<span class="st">"Commit_6"</span>,<span class="st">"Commit_7"</span>,<span class="st">"Commit_8"</span>,  <span class="co"># Commitment items</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Long_Term_Traits_1"</span>,<span class="st">"Long_Term_Traits_2"</span>,<span class="st">"Long_Term_Traits_3"</span>,<span class="st">"Long_Term_Traits_4"</span>,<span class="st">"Long_Term_Traits_5"</span>,<span class="st">"Long_Term_Traits_6"</span>,<span class="st">"Long_Term_Traits_7"</span>,<span class="st">"Long_Term_Traits_8"</span>,<span class="st">"Long_Term_Traits_9"</span>,<span class="st">"Long_Term_Traits_10"</span>,  <span class="co"># Long-term items</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Short_Term_Traits_1"</span>,<span class="st">"Short_Term_Traits_2"</span>,<span class="st">"Short_Term_Traits_3"</span>,<span class="st">"Short_Term_Traits_4"</span>,<span class="st">"Short_Term_Traits_5"</span>,<span class="st">"Short_Term_Traits_6"</span>,<span class="st">"Short_Term_Traits_7"</span>,<span class="st">"Short_Term_Traits_8"</span>,<span class="st">"Short_Term_Traits_9"</span>,<span class="st">"Short_Term_Traits_10"</span> <span class="co"># Short-term items</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the number of variables in the list</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(study_vars)  <span class="co"># confirms total number matches expected count</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 32</code></pre>
+</div>
+</div>
+</section>
+<section id="creating-analysis-dataset" class="level5">
+<h5 class="anchored" data-anchor-id="creating-analysis-dataset">Creating analysis dataset</h5>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert all variables to numeric format</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="co">#and then</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(Long_Term_Traits_1<span class="sc">:</span>Commit_8, as.numeric))  <span class="co"># ensures numeric type for all variables</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize dataset to confirm conversion</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data)  <span class="co"># checks values and missing data - remove for final report</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  ResponseId        DistributionChannel    consent  Long_Term_Traits_1
+ Length:61          Length:61           Min.   :1   Min.   :2.00      
+ Class :character   Class :character    1st Qu.:1   1st Qu.:7.00      
+ Mode  :character   Mode  :character    Median :1   Median :7.00      
+                                        Mean   :1   Mean   :6.75      
+                                        3rd Qu.:1   3rd Qu.:7.00      
+                                        Max.   :1   Max.   :7.00      
+                                                    NA's   :29        
+ Long_Term_Traits_2 Long_Term_Traits_3 Long_Term_Traits_4 Long_Term_Traits_5
+ Min.   :1.000      Min.   :4.000      Min.   :2.000      Min.   :3.000     
+ 1st Qu.:7.000      1st Qu.:5.000      1st Qu.:4.000      1st Qu.:7.000     
+ Median :7.000      Median :5.000      Median :4.500      Median :7.000     
+ Mean   :6.688      Mean   :5.562      Mean   :4.625      Mean   :6.781     
+ 3rd Qu.:7.000      3rd Qu.:6.250      3rd Qu.:5.000      3rd Qu.:7.000     
+ Max.   :7.000      Max.   :7.000      Max.   :7.000      Max.   :7.000     
+ NA's   :29         NA's   :29         NA's   :29         NA's   :29        
+ Long_Term_Traits_6 Long_Term_Traits_7 Long_Term_Traits_8 Long_Term_Traits_9
+ Min.   :3          Min.   :4.000      Min.   :1.00       Min.   :2.000     
+ 1st Qu.:4          1st Qu.:5.750      1st Qu.:6.75       1st Qu.:7.000     
+ Median :5          Median :6.000      Median :7.00       Median :7.000     
+ Mean   :5          Mean   :6.125      Mean   :6.50       Mean   :6.625     
+ 3rd Qu.:6          3rd Qu.:7.000      3rd Qu.:7.00       3rd Qu.:7.000     
+ Max.   :7          Max.   :7.000      Max.   :7.00       Max.   :7.000     
+ NA's   :29         NA's   :29         NA's   :29         NA's   :29        
+ Long_Term_Traits_10 Short_Term_Traits_1 Short_Term_Traits_2
+ Min.   :2.000       Min.   :1.000       Min.   :2.000      
+ 1st Qu.:4.000       1st Qu.:3.000       1st Qu.:4.000      
+ Median :4.500       Median :5.000       Median :5.000      
+ Mean   :4.562       Mean   :4.483       Mean   :4.828      
+ 3rd Qu.:5.000       3rd Qu.:6.000       3rd Qu.:6.000      
+ Max.   :7.000       Max.   :7.000       Max.   :7.000      
+ NA's   :29          NA's   :32          NA's   :32         
+ Short_Term_Traits_3 Short_Term_Traits_4 Short_Term_Traits_5
+ Min.   :5.000       Min.   :2.000       Min.   :1.000      
+ 1st Qu.:6.000       1st Qu.:4.000       1st Qu.:2.000      
+ Median :6.000       Median :6.000       Median :4.000      
+ Mean   :6.345       Mean   :5.414       Mean   :3.759      
+ 3rd Qu.:7.000       3rd Qu.:7.000       3rd Qu.:5.000      
+ Max.   :7.000       Max.   :7.000       Max.   :7.000      
+ NA's   :32          NA's   :32          NA's   :32         
+ Short_Term_Traits_6 Short_Term_Traits_7 Short_Term_Traits_8
+ Min.   :3.000       Min.   :1.000       Min.   :1.000      
+ 1st Qu.:5.000       1st Qu.:6.000       1st Qu.:4.000      
+ Median :6.000       Median :7.000       Median :5.000      
+ Mean   :5.828       Mean   :6.241       Mean   :5.103      
+ 3rd Qu.:7.000       3rd Qu.:7.000       3rd Qu.:7.000      
+ Max.   :7.000       Max.   :7.000       Max.   :7.000      
+ NA's   :32          NA's   :32          NA's   :32         
+ Short_Term_Traits_9 Short_Term_Traits_10     check          Commit_1    
+ Min.   :1.000       Min.   :1.000        Min.   :1.000   Min.   :1.000  
+ 1st Qu.:3.000       1st Qu.:5.000        1st Qu.:1.000   1st Qu.:4.000  
+ Median :4.000       Median :5.000        Median :1.000   Median :5.000  
+ Mean   :4.276       Mean   :5.448        Mean   :1.475   Mean   :5.246  
+ 3rd Qu.:6.000       3rd Qu.:7.000        3rd Qu.:2.000   3rd Qu.:7.000  
+ Max.   :7.000       Max.   :7.000        Max.   :2.000   Max.   :7.000  
+ NA's   :32          NA's   :32                                          
+    Commit_2        Commit_3        Commit_4        Commit_5    
+ Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   :1.000  
+ 1st Qu.:1.000   1st Qu.:3.000   1st Qu.:1.000   1st Qu.:4.000  
+ Median :2.000   Median :4.000   Median :2.000   Median :5.000  
+ Mean   :2.869   Mean   :4.311   Mean   :2.459   Mean   :4.902  
+ 3rd Qu.:5.000   3rd Qu.:6.000   3rd Qu.:4.000   3rd Qu.:7.000  
+ Max.   :7.000   Max.   :7.000   Max.   :7.000   Max.   :7.000  
+                                                                
+    Commit_6        Commit_7        Commit_8          age            sex       
+ Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   :19.0   Min.   :1.000  
+ 1st Qu.:1.000   1st Qu.:3.000   1st Qu.:1.000   1st Qu.:21.0   1st Qu.:2.000  
+ Median :2.000   Median :5.000   Median :2.000   Median :21.0   Median :2.000  
+ Mean   :2.541   Mean   :4.721   Mean   :2.754   Mean   :21.3   Mean   :1.918  
+ 3rd Qu.:4.000   3rd Qu.:6.000   3rd Qu.:4.000   3rd Qu.:22.0   3rd Qu.:2.000  
+ Max.   :7.000   Max.   :7.000   Max.   :7.000   Max.   :27.0   Max.   :3.000  
+                                                                               
+  condition        
+ Length:61         
+ Class :character  
+ Mode  :character  
+                   
+                   
+                   
+                   </code></pre>
+</div>
+</div>
+<p><strong>Label the experimental condition</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert condition variable to labeled factor</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>condition)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Long-term Short-term 
+        32         29 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert condition variable to labeled factor</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">sex =</span> <span class="fu">factor</span>(</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>      sex,                     <span class="co"># original numeric variable</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),             <span class="co"># original coding</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Other"</span>, <span class="st">"Female"</span>, <span class="st">"Other"</span>)  <span class="co"># readable labels</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify condition counts</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(sex)  <span class="co"># counts observations in each condition</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     sex  n
+1  Other 11
+2 Female 50</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="creating-participant-id" class="level5">
+<h5 class="anchored" data-anchor-id="creating-participant-id">Creating Participant ID</h5>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a unique ID for each participant</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">row_number</span>())  <span class="co"># assigns sequential ID values</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview the ID variable</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> <span class="fu">select</span>(id) <span class="sc">%&gt;%</span> <span class="fu">head</span>()  <span class="co"># confirms ID structure</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  id
+1  1
+2  2
+3  3
+4  4
+5  5
+6  6</code></pre>
+</div>
+</div>
+</section>
+<section id="reverse-coding" class="level5">
+<h5 class="anchored" data-anchor-id="reverse-coding">Reverse Coding</h5>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reverse-code selected commitment items</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Commit_2r  =</span> <span class="dv">8</span> <span class="sc">-</span> Commit_2,   <span class="co"># reverse-codes Commit_2</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Commit_4r  =</span> <span class="dv">8</span> <span class="sc">-</span> Commit_4,   <span class="co"># reverse-codes Commit_4</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Commit_6r =</span> <span class="dv">8</span> <span class="sc">-</span> Commit_6,  <span class="co"># reverse-codes Commit_6</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Commit_8r =</span> <span class="dv">8</span> <span class="sc">-</span> Commit_8   <span class="co"># reverse-codes Commit_8</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare original and reversed values</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Commit_4, Commit_4r) <span class="sc">%&gt;%</span>  <span class="co"># selects variables for comparison</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()  <span class="co"># displays first rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Commit_4 Commit_4r
+1        3         5
+2        5         3
+3        2         6
+4        4         4
+5        1         7
+6        1         7</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reverse-code selected long term items so that higher score means higher emphasis on trustworthiness</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Long_Term_Traits_3r  =</span> <span class="dv">8</span> <span class="sc">-</span> Long_Term_Traits_3,   <span class="co"># reverse-codes Long_Term_Traits3</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Long_Term_Traits_4r  =</span> <span class="dv">8</span> <span class="sc">-</span> Long_Term_Traits_4,   <span class="co"># reverse-codes Long_Term_Traits4</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Long_Term_Traits_6r =</span> <span class="dv">8</span> <span class="sc">-</span> Long_Term_Traits_6,  <span class="co"># reverse-codes Long_Term_Traits6</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Long_Term_Traits_7r =</span> <span class="dv">8</span> <span class="sc">-</span> Long_Term_Traits_7,   <span class="co"># reverse-codes Long_Term_Traits7</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Long_Term_Traits_10r =</span> <span class="dv">8</span> <span class="sc">-</span> Long_Term_Traits_10 <span class="co"># reverse-codes Long_Term_Traits10</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare original and reversed values</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Long_Term_Traits_3, Long_Term_Traits_3r) <span class="sc">%&gt;%</span>  <span class="co"># selects variables for comparison</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()  <span class="co"># displays first rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Long_Term_Traits_3 Long_Term_Traits_3r
+1                 NA                  NA
+2                  7                   1
+3                 NA                  NA
+4                 NA                  NA
+5                  4                   4
+6                  5                   3</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reverse-code selected short term items so that higher score means higher emphasis on trustworthiness</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Short_Term_Traits_3r  =</span> <span class="dv">8</span> <span class="sc">-</span> Short_Term_Traits_3,   <span class="co"># reverse-codes Short_Term_Traits3</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Short_Term_Traits_4r  =</span> <span class="dv">8</span> <span class="sc">-</span> Short_Term_Traits_4,   <span class="co"># reverse-codes Short_Term_Traits4</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Short_Term_Traits_6r =</span> <span class="dv">8</span> <span class="sc">-</span> Short_Term_Traits_6,  <span class="co"># reverse-codes Short_Term_Traits6</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Short_Term_Traits_7r =</span> <span class="dv">8</span> <span class="sc">-</span> Short_Term_Traits_7,   <span class="co"># reverse-codes Short_Term_Traits7</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Short_Term_Traits_10r =</span> <span class="dv">8</span> <span class="sc">-</span> Short_Term_Traits_10 <span class="co"># reverse-codes Short_Term_Traits10</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare original and reversed values</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Short_Term_Traits_3, Short_Term_Traits_3r) <span class="sc">%&gt;%</span>  <span class="co"># selects variables for comparison</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()  <span class="co"># displays first rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Short_Term_Traits_3 Short_Term_Traits_3r
+1                   5                    3
+2                  NA                   NA
+3                   5                    3
+4                   5                    3
+5                  NA                   NA
+6                  NA                   NA</code></pre>
+</div>
+</div>
+</section>
+<section id="defining-scales" class="level5">
+<h5 class="anchored" data-anchor-id="defining-scales">Defining Scales</h5>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define commitment scale items</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>Commit_items <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Commit_1"</span>,<span class="st">"Commit_2r"</span>,<span class="st">"Commit_3"</span>,<span class="st">"Commit_4r"</span>,<span class="st">"Commit_5"</span>,<span class="st">"Commit_6r"</span>,<span class="st">"Commit_7"</span>,<span class="st">"Commit_8r"</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that all items exist in dataset</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="fu">setNames</span>(Commit_items <span class="sc">%in%</span> <span class="fu">names</span>(data), Commit_items)  <span class="co"># verifies item presence</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Commit_1 Commit_2r  Commit_3 Commit_4r  Commit_5 Commit_6r  Commit_7 Commit_8r 
+     TRUE      TRUE      TRUE      TRUE      TRUE      TRUE      TRUE      TRUE </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">contains</span>(<span class="st">"Traits"</span>), <span class="sc">~</span><span class="fu">coalesce</span>(., <span class="dv">0</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Trait_1_Total  =</span> Long_Term_Traits_1  <span class="sc">+</span> Short_Term_Traits_1,</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Trait_2_Total  =</span> Long_Term_Traits_2  <span class="sc">+</span> Short_Term_Traits_2,</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Trait_3_Total  =</span> Long_Term_Traits_3  <span class="sc">+</span> Short_Term_Traits_3,</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Trait_4_Total  =</span> Long_Term_Traits_4  <span class="sc">+</span> Short_Term_Traits_4,</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Trait_5_Total  =</span> Long_Term_Traits_5  <span class="sc">+</span> Short_Term_Traits_5,</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Trait_6_Total  =</span> Long_Term_Traits_6  <span class="sc">+</span> Short_Term_Traits_6,</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">Trait_7_Total  =</span> Long_Term_Traits_7  <span class="sc">+</span> Short_Term_Traits_7,</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">Trait_8_Total  =</span> Long_Term_Traits_8  <span class="sc">+</span> Short_Term_Traits_8,</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">Trait_9_Total  =</span> Long_Term_Traits_9  <span class="sc">+</span> Short_Term_Traits_9,</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">Trait_10_Total =</span> Long_Term_Traits_10 <span class="sc">+</span> Short_Term_Traits_10</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define commitment scale items</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>Warmth_items <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Trait_1_Total"</span>, <span class="st">"Trait_2_Total"</span>, <span class="st">"Trait_5_Total"</span>, <span class="st">"Trait_8_Total"</span>, <span class="st">"Trait_9_Total"</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that all items exist in dataset</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="fu">setNames</span>(Warmth_items <span class="sc">%in%</span> <span class="fu">names</span>(data), Warmth_items)  <span class="co"># verifies item presence</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Trait_1_Total Trait_2_Total Trait_5_Total Trait_8_Total Trait_9_Total 
+         TRUE          TRUE          TRUE          TRUE          TRUE </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define commitment scale items</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>Attractiveness_items <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Trait_3_Total"</span>, <span class="st">"Trait_4_Total"</span>, <span class="st">"Trait_6_Total"</span>, <span class="st">"Trait_7_Total"</span>, <span class="st">"Trait_10_Total"</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that all items exist in dataset</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="fu">setNames</span>(Attractiveness_items <span class="sc">%in%</span> <span class="fu">names</span>(data), Attractiveness_items)  <span class="co"># verifies item presence</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Trait_3_Total  Trait_4_Total  Trait_6_Total  Trait_7_Total Trait_10_Total 
+          TRUE           TRUE           TRUE           TRUE           TRUE </code></pre>
+</div>
+</div>
+</section>
+<section id="computing-scale-scores-and-scale-variables" class="level5">
+<h5 class="anchored" data-anchor-id="computing-scale-scores-and-scale-variables">Computing Scale Scores and Scale Variables</h5>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute commitment scale as the row mean of items</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Commit_scale =</span> <span class="fu">rowMeans</span>(<span class="fu">as.matrix</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(Commit_items))), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)  <span class="co"># calculates scale score</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Check proportion of missing scale scores</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">is.na</span>(data<span class="sc">$</span>Commit_scale))  <span class="co"># should be close to 0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check distribution and range of the scale</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data<span class="sc">$</span>Commit_scale)  <span class="co"># should fall within expected range</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  1.000   3.875   5.250   5.070   6.375   7.000 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute long term scale as the row mean of items</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Warmth_scale =</span> <span class="fu">rowMeans</span>(<span class="fu">as.matrix</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(Warmth_items))), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)  <span class="co"># calculates scale score</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Check proportion of missing scale scores</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">is.na</span>(data<span class="sc">$</span>Warmth_scale))  <span class="co"># should be close to 0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check distribution and range of the scale</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data<span class="sc">$</span>Warmth_scale)  <span class="co"># should fall within expected range</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  1.800   4.200   6.600   5.633   7.000   7.000 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute long term scale as the row mean of items</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Attractiveness_scale =</span> <span class="fu">rowMeans</span>(<span class="fu">as.matrix</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(Attractiveness_items))), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)  <span class="co"># calculates scale score</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Check proportion of missing scale scores</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">is.na</span>(data<span class="sc">$</span>Attractiveness_scale))  <span class="co"># should be close to 0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check distribution and range of the scale</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data<span class="sc">$</span>Attractiveness_scale)  <span class="co"># should fall within expected range</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  3.400   5.000   5.400   5.498   6.000   7.000 </code></pre>
+</div>
+</div>
+</section>
+<section id="final-check" class="level5">
+<h5 class="anchored" data-anchor-id="final-check">Final Check</h5>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check dataset dimensions</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(data)  <span class="co"># confirms number of rows and columns</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 61 63</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check final variable names</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(data)  <span class="co"># confirms variables available for next steps</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "ResponseId"            "DistributionChannel"   "consent"              
+ [4] "Long_Term_Traits_1"    "Long_Term_Traits_2"    "Long_Term_Traits_3"   
+ [7] "Long_Term_Traits_4"    "Long_Term_Traits_5"    "Long_Term_Traits_6"   
+[10] "Long_Term_Traits_7"    "Long_Term_Traits_8"    "Long_Term_Traits_9"   
+[13] "Long_Term_Traits_10"   "Short_Term_Traits_1"   "Short_Term_Traits_2"  
+[16] "Short_Term_Traits_3"   "Short_Term_Traits_4"   "Short_Term_Traits_5"  
+[19] "Short_Term_Traits_6"   "Short_Term_Traits_7"   "Short_Term_Traits_8"  
+[22] "Short_Term_Traits_9"   "Short_Term_Traits_10"  "check"                
+[25] "Commit_1"              "Commit_2"              "Commit_3"             
+[28] "Commit_4"              "Commit_5"              "Commit_6"             
+[31] "Commit_7"              "Commit_8"              "age"                  
+[34] "sex"                   "condition"             "id"                   
+[37] "Commit_2r"             "Commit_4r"             "Commit_6r"            
+[40] "Commit_8r"             "Long_Term_Traits_3r"   "Long_Term_Traits_4r"  
+[43] "Long_Term_Traits_6r"   "Long_Term_Traits_7r"   "Long_Term_Traits_10r" 
+[46] "Short_Term_Traits_3r"  "Short_Term_Traits_4r"  "Short_Term_Traits_6r" 
+[49] "Short_Term_Traits_7r"  "Short_Term_Traits_10r" "Trait_1_Total"        
+[52] "Trait_2_Total"         "Trait_3_Total"         "Trait_4_Total"        
+[55] "Trait_5_Total"         "Trait_6_Total"         "Trait_7_Total"        
+[58] "Trait_8_Total"         "Trait_9_Total"         "Trait_10_Total"       
+[61] "Commit_scale"          "Warmth_scale"          "Attractiveness_scale" </code></pre>
+</div>
+</div>
+</section>
+<section id="computing-median-of-each-scale" class="level5">
+<h5 class="anchored" data-anchor-id="computing-median-of-each-scale">Computing Median of Each Scale</h5>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the median value of the Commit scale</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(data<span class="sc">$</span>Commit_scale, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5.25</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the median value of the Short Term scale</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(data<span class="sc">$</span>Warmth_scale, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6.6</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the median value of the Short Term scale</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(data<span class="sc">$</span>Attractiveness_scale, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5.4</code></pre>
+</div>
+</div>
+</section>
+<section id="creating-split-variables" class="level5">
+<h5 class="anchored" data-anchor-id="creating-split-variables">Creating Split Variables</h5>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the median of the Commit scale</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>Commit_median <span class="ot">&lt;-</span> <span class="fu">median</span>(data<span class="sc">$</span>Commit_scale, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a new categorical variable based on the median split</span></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Classify scores at or below the median as "Low" and above the median as "High"</span></span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Commit_msplit =</span> <span class="fu">if_else</span>(Commit_scale <span class="sc">&lt;=</span> Commit_median, <span class="st">"Low"</span>, <span class="st">"High"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Convert to a factor with "Low" as the reference level</span></span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">factor</span>(<span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Low"</span>, <span class="st">"High"</span>))</span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the median of the Short Term scale</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>Warmth_median <span class="ot">&lt;-</span> <span class="fu">median</span>(data<span class="sc">$</span>Warmth_scale, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a new categorical variable based on the median split</span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Classify scores at or below the median as "Low" and above the median as "High"</span></span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Warmth_msplit =</span> <span class="fu">if_else</span>(Warmth_scale <span class="sc">&lt;=</span> Warmth_median, <span class="st">"Low"</span>, <span class="st">"High"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Convert to a factor with "Low" as the reference level</span></span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">factor</span>(<span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Low"</span>, <span class="st">"High"</span>))</span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the median of the Short Term scale</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>Attractiveness_median <span class="ot">&lt;-</span> <span class="fu">median</span>(data<span class="sc">$</span>Attractiveness_scale, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a new categorical variable based on the median split</span></span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Classify scores at or below the median as "Low" and above the median as "High"</span></span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Attractiveness_msplit =</span> <span class="fu">if_else</span>(Attractiveness_scale <span class="sc">&lt;=</span> Attractiveness_median, <span class="st">"Low"</span>, <span class="st">"High"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Convert to a factor with "Low" as the reference level</span></span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">factor</span>(<span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Low"</span>, <span class="st">"High"</span>))</span>
+<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="inspecting-split-classifications" class="level5">
+<h5 class="anchored" data-anchor-id="inspecting-split-classifications">Inspecting Split Classifications</h5>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview the continuous Commit scores alongside the new group labels</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Commit_scale, Commit_msplit) <span class="sc">%&gt;%</span>  <span class="co"># Keep only the scale and split variables</span></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span>                      <span class="co"># Show the first 10 rows</span></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()                   <span class="co"># Format as a table for display</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Commit_scale</th>
+<th style="text-align: left;">Commit_msplit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">4.875</td>
+<td style="text-align: left;">Low</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2.875</td>
+<td style="text-align: left;">Low</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6.750</td>
+<td style="text-align: left;">High</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3.500</td>
+<td style="text-align: left;">Low</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6.375</td>
+<td style="text-align: left;">High</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5.875</td>
+<td style="text-align: left;">High</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7.000</td>
+<td style="text-align: left;">High</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6.500</td>
+<td style="text-align: left;">High</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4.625</td>
+<td style="text-align: left;">Low</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5.375</td>
+<td style="text-align: left;">High</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of participants in each Commit group</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Commit_msplit) <span class="sc">%&gt;%</span>            <span class="co"># Count observations in each group</span></span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()                  <span class="co"># Format as a table for display</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Commit_msplit</th>
+<th style="text-align: right;">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Low</td>
+<td style="text-align: right;">32</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">High</td>
+<td style="text-align: right;">29</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview the continuous Short Term scores alongside the new group labels</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Warmth_scale, Warmth_msplit) <span class="sc">%&gt;%</span>  <span class="co"># Keep only the scale and split variables</span></span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span>                      <span class="co"># Show the first 10 rows</span></span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()                   <span class="co"># Format as a table for display</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Warmth_scale</th>
+<th style="text-align: left;">Warmth_msplit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">5.0</td>
+<td style="text-align: left;">Low</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6.8</td>
+<td style="text-align: left;">High</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3.0</td>
+<td style="text-align: left;">Low</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5.6</td>
+<td style="text-align: left;">Low</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7.0</td>
+<td style="text-align: left;">High</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6.6</td>
+<td style="text-align: left;">Low</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4.0</td>
+<td style="text-align: left;">Low</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6.2</td>
+<td style="text-align: left;">Low</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6.6</td>
+<td style="text-align: left;">Low</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5.0</td>
+<td style="text-align: left;">Low</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of participants in each Short Term group</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Warmth_msplit) <span class="sc">%&gt;%</span>            <span class="co"># Count observations in each group</span></span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()                  <span class="co"># Format as a table for display</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Warmth_msplit</th>
+<th style="text-align: right;">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Low</td>
+<td style="text-align: right;">32</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">High</td>
+<td style="text-align: right;">29</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview the continuous Short Term scores alongside the new group labels</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Attractiveness_scale, Attractiveness_msplit) <span class="sc">%&gt;%</span>  <span class="co"># Keep only the scale and split variables</span></span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span>                      <span class="co"># Show the first 10 rows</span></span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()                   <span class="co"># Format as a table for display</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Attractiveness_scale</th>
+<th style="text-align: left;">Attractiveness_msplit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">4.2</td>
+<td style="text-align: left;">Low</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5.6</td>
+<td style="text-align: left;">High</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3.4</td>
+<td style="text-align: left;">Low</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5.2</td>
+<td style="text-align: left;">Low</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4.4</td>
+<td style="text-align: left;">Low</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4.8</td>
+<td style="text-align: left;">Low</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7.0</td>
+<td style="text-align: left;">High</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3.6</td>
+<td style="text-align: left;">Low</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7.0</td>
+<td style="text-align: left;">High</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5.0</td>
+<td style="text-align: left;">Low</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of participants in each Short Term group</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Attractiveness_msplit) <span class="sc">%&gt;%</span>            <span class="co"># Count observations in each group</span></span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()                  <span class="co"># Format as a table for display</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Attractiveness_msplit</th>
+<th style="text-align: right;">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Low</td>
+<td style="text-align: right;">31</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">High</td>
+<td style="text-align: right;">30</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="compute-internal-consistency-alpha-and-omega" class="level5">
+<h5 class="anchored" data-anchor-id="compute-internal-consistency-alpha-and-omega"><strong>Compute internal consistency (alpha and omega)</strong></h5>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create item-only data frames for each scale</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>Commit_item_df <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">all_of</span>(Commit_items))</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>Warmth_item_df <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">all_of</span>(Warmth_items))</span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>Attractiveness_item_df <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">all_of</span>(Attractiveness_items))</span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute internal consistency estimates (store results)</span></span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a>Commit_alpha <span class="ot">&lt;-</span> psych<span class="sc">::</span><span class="fu">alpha</span>(Commit_item_df)</span>
+<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a>Commit_omega <span class="ot">&lt;-</span> psych<span class="sc">::</span><span class="fu">omega</span>(Commit_item_df, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-10"><a href="#cb68-10" aria-hidden="true" tabindex="-1"></a>Warmth_alpha <span class="ot">&lt;-</span> psych<span class="sc">::</span><span class="fu">alpha</span>(Warmth_item_df)</span>
+<span id="cb68-11"><a href="#cb68-11" aria-hidden="true" tabindex="-1"></a>Warmth_omega <span class="ot">&lt;-</span> psych<span class="sc">::</span><span class="fu">omega</span>(Warmth_item_df, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb68-12"><a href="#cb68-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-13"><a href="#cb68-13" aria-hidden="true" tabindex="-1"></a>Attractiveness_alpha <span class="ot">&lt;-</span> psych<span class="sc">::</span><span class="fu">alpha</span>(Attractiveness_item_df)</span>
+<span id="cb68-14"><a href="#cb68-14" aria-hidden="true" tabindex="-1"></a>Attractiveness_omega <span class="ot">&lt;-</span> psych<span class="sc">::</span><span class="fu">omega</span>(Attractiveness_item_df, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb68-15"><a href="#cb68-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-16"><a href="#cb68-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Print only alpha and omega coefficients</span></span>
+<span id="cb68-17"><a href="#cb68-17" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb68-18"><a href="#cb68-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">scale =</span> <span class="fu">c</span>(<span class="st">"Commit"</span>, <span class="st">"Warmth"</span>, <span class="st">"Attractiveness"</span>),</span>
+<span id="cb68-19"><a href="#cb68-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="fu">c</span>(</span>
+<span id="cb68-20"><a href="#cb68-20" aria-hidden="true" tabindex="-1"></a>    Commit_alpha<span class="sc">$</span>total<span class="sc">$</span>raw_alpha,</span>
+<span id="cb68-21"><a href="#cb68-21" aria-hidden="true" tabindex="-1"></a>    Warmth_alpha<span class="sc">$</span>total<span class="sc">$</span>raw_alpha,</span>
+<span id="cb68-22"><a href="#cb68-22" aria-hidden="true" tabindex="-1"></a>    Attractiveness_alpha<span class="sc">$</span>total<span class="sc">$</span>raw_alpha</span>
+<span id="cb68-23"><a href="#cb68-23" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb68-24"><a href="#cb68-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">omega =</span> <span class="fu">c</span>(</span>
+<span id="cb68-25"><a href="#cb68-25" aria-hidden="true" tabindex="-1"></a>    Commit_omega<span class="sc">$</span>omega.tot,</span>
+<span id="cb68-26"><a href="#cb68-26" aria-hidden="true" tabindex="-1"></a>    Warmth_alpha<span class="sc">$</span>total<span class="sc">$</span>raw_alpha,</span>
+<span id="cb68-27"><a href="#cb68-27" aria-hidden="true" tabindex="-1"></a>    Attractiveness_alpha<span class="sc">$</span>total<span class="sc">$</span>raw_alpha</span>
+<span id="cb68-28"><a href="#cb68-28" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb68-29"><a href="#cb68-29" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  scale          alpha omega
+  &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt;
+1 Commit         0.940 0.967
+2 Warmth         0.927 0.927
+3 Attractiveness 0.811 0.811</code></pre>
+</div>
+</div>
+<p><strong><em>In the output, locate and record:</em></strong></p>
+<ul>
+<li><strong><em>Cronbach’s alpha (α)</em></strong></li>
+<li><strong><em>McDonald’s omega (ω)</em></strong></li>
+</ul>
+<hr>
+<p><strong>Descriptive Statistics (Continuous Variables)</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Descriptive statistics for continuous scale variables</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">describe</span>(</span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">%&gt;%</span> <span class="fu">select</span>(Commit_scale, Warmth_scale, Attractiveness_scale)</span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 5%">
+<col style="width: 3%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 5%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 9%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">vars</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">median</th>
+<th style="text-align: right;">trimmed</th>
+<th style="text-align: right;">mad</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">max</th>
+<th style="text-align: right;">range</th>
+<th style="text-align: right;">skew</th>
+<th style="text-align: right;">kurtosis</th>
+<th style="text-align: right;">se</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Commit_scale</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">5.07</td>
+<td style="text-align: right;">1.54</td>
+<td style="text-align: right;">5.25</td>
+<td style="text-align: right;">5.18</td>
+<td style="text-align: right;">1.85</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">-0.45</td>
+<td style="text-align: right;">-0.72</td>
+<td style="text-align: right;">0.20</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Warmth_scale</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">5.63</td>
+<td style="text-align: right;">1.64</td>
+<td style="text-align: right;">6.60</td>
+<td style="text-align: right;">5.87</td>
+<td style="text-align: right;">0.59</td>
+<td style="text-align: right;">1.8</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">5.2</td>
+<td style="text-align: right;">-0.85</td>
+<td style="text-align: right;">-0.67</td>
+<td style="text-align: right;">0.21</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Attractiveness_scale</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">5.50</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">5.40</td>
+<td style="text-align: right;">5.52</td>
+<td style="text-align: right;">0.89</td>
+<td style="text-align: right;">3.4</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">3.6</td>
+<td style="text-align: right;">-0.04</td>
+<td style="text-align: right;">-0.73</td>
+<td style="text-align: right;">0.12</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><strong>Run descriptives for categorical variables</strong></p>
+<p><em>Categorical variables are summarized using counts rather than means.</em></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count participants by condition</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(condition) <span class="sc">%&gt;%</span></span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">condition</th>
+<th style="text-align: right;">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Long-term</td>
+<td style="text-align: right;">32</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Short-term</td>
+<td style="text-align: right;">29</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><strong>Convert counts to percentages</strong></p>
+<p><em>Percentages make group composition easier to interpret than raw counts.</em></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert counts to percentages</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(condition) <span class="sc">%&gt;%</span></span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percent =</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> n <span class="sc">/</span> <span class="fu">sum</span>(n), <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">condition</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Long-term</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">52.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Short-term</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">47.5</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><strong>Run the ANOVA for DV</strong></p>
+<p><em>Mood Condition is coded as 0 = Negative and 1 = Positive, and Neuroticism is coded as Low vs.&nbsp;High, as defined during data preparation.</em></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2x2 between-subjects ANOVA predicting Warmth scores</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="co"># DV: Warmth_scale</span></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Factors: condition and Commit_msplit</span></span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>a1_Warmth <span class="ot">&lt;-</span> afex<span class="sc">::</span><span class="fu">aov_ez</span>(</span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data,</span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="st">"id"</span>,</span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">dv =</span> <span class="st">"Warmth_scale"</span>,</span>
+<span id="cb73-8"><a href="#cb73-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">between =</span> <span class="fu">c</span>(<span class="st">"condition"</span>, <span class="st">"Commit_msplit"</span>)</span>
+<span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb73-10"><a href="#cb73-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-11"><a href="#cb73-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the ANOVA table</span></span>
+<span id="cb73-12"><a href="#cb73-12" aria-hidden="true" tabindex="-1"></a>a1_Warmth</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Anova Table (Type 3 tests)
+
+Response: Warmth_scale
+                   Effect    df  MSE         F  ges p.value
+1               condition 1, 57 1.51 48.46 *** .460   &lt;.001
+2           Commit_msplit 1, 57 1.51      1.43 .024    .237
+3 condition:Commit_msplit 1, 57 1.51      0.20 .004    .656
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2x2 between-subjects ANOVA predicting Attractiveness scores</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="co"># DV: Attractiveness_scale</span></span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Factors: condition and Commit_msplit</span></span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>a2_Attractiveness <span class="ot">&lt;-</span> afex<span class="sc">::</span><span class="fu">aov_ez</span>(</span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data,</span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="st">"id"</span>,</span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">dv =</span> <span class="st">"Attractiveness_scale"</span>,</span>
+<span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">between =</span> <span class="fu">c</span>(<span class="st">"condition"</span>, <span class="st">"Commit_msplit"</span>)</span>
+<span id="cb75-9"><a href="#cb75-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb75-10"><a href="#cb75-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-11"><a href="#cb75-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the ANOVA table</span></span>
+<span id="cb75-12"><a href="#cb75-12" aria-hidden="true" tabindex="-1"></a>a2_Attractiveness</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Anova Table (Type 3 tests)
+
+Response: Attractiveness_scale
+                   Effect    df  MSE       F  ges p.value
+1               condition 1, 57 0.82 8.82 ** .134    .004
+2           Commit_msplit 1, 57 0.82    0.10 .002    .756
+3 condition:Commit_msplit 1, 57 0.82    0.38 .007    .538
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p><em>Identify the F statistic, numerator and denominator degrees of freedom, p-value, and generalized eta-squared for each effect.</em></p>
+<hr>
+</section>
+<section id="inspect-marginal-overall-means-and-confidence-intervals-main-effects-group-means" class="level3">
+<h3 class="anchored" data-anchor-id="inspect-marginal-overall-means-and-confidence-intervals-main-effects-group-means">Inspect marginal (overall) means and confidence intervals (Main effects / “group means”)</h3>
+<p><em>In this step, you will examine group means and confidence intervals to determine the direction of effects tested in the ANOVA.</em></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Marginal (group) means for mood condition</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Averaged across levels of neuroticism</span></span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(a1_Warmth, <span class="sc">~</span> condition)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> condition  emmean    SE df lower.CL upper.CL
+ Long-term    6.69 0.218 57     6.25     7.12
+ Short-term   4.47 0.232 57     4.00     4.93
+
+Results are averaged over the levels of: Commit_msplit 
+Confidence level used: 0.95 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Marginal (group) means for neuroticism</span></span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Averaged across levels of mood condition</span></span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(a1_Warmth, <span class="sc">~</span> Commit_msplit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Commit_msplit emmean    SE df lower.CL upper.CL
+ Low             5.77 0.218 57     5.33     6.20
+ High            5.39 0.232 57     4.92     5.85
+
+Results are averaged over the levels of: condition 
+Confidence level used: 0.95 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Marginal (group) means for mood condition</span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Averaged across levels of neuroticism</span></span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(a2_Attractiveness, <span class="sc">~</span> condition)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> condition  emmean    SE df lower.CL upper.CL
+ Long-term    5.18 0.161 57     4.86     5.50
+ Short-term   5.87 0.171 57     5.53     6.22
+
+Results are averaged over the levels of: Commit_msplit 
+Confidence level used: 0.95 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Marginal (group) means for neuroticism</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Averaged across levels of mood condition</span></span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(a2_Attractiveness, <span class="sc">~</span> Commit_msplit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Commit_msplit emmean    SE df lower.CL upper.CL
+ Low             5.49 0.161 57     5.17     5.81
+ High            5.56 0.171 57     5.22     5.90
+
+Results are averaged over the levels of: condition 
+Confidence level used: 0.95 </code></pre>
+</div>
+</div>
+<p><strong><em>Locate the marginal (overall) means and confidence intervals.</em></strong></p>
+<hr>
+</section>
+<section id="inspect-cell-means-and-confidence-intervals-interaction-means" class="level3">
+<h3 class="anchored" data-anchor-id="inspect-cell-means-and-confidence-intervals-interaction-means">Inspect cell means and confidence intervals (Interaction Means)</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Raw estimated marginal means</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(a1_Warmth, <span class="sc">~</span> condition <span class="sc">*</span> Commit_msplit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> condition  Commit_msplit emmean    SE df lower.CL upper.CL
+ Long-term  Low             6.95 0.318 57     6.31     7.58
+ Short-term Low             4.59 0.298 57     3.99     5.19
+ Long-term  High            6.42 0.298 57     5.83     7.02
+ Short-term High            4.35 0.355 57     3.64     5.06
+
+Confidence level used: 0.95 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Raw estimated marginal means</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(a2_Attractiveness, <span class="sc">~</span> condition <span class="sc">*</span> Commit_msplit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> condition  Commit_msplit emmean    SE df lower.CL upper.CL
+ Long-term  Low             5.21 0.234 57     4.74     5.68
+ Short-term Low             5.76 0.220 57     5.32     6.21
+ Long-term  High            5.14 0.220 57     4.70     5.58
+ Short-term High            5.98 0.262 57     5.46     6.51
+
+Confidence level used: 0.95 </code></pre>
+</div>
+</div>
+<p>Inspect the output: all condition × group combinations are present</p>
+<p>means and confidence intervals are displayed</p>
+<hr>
+</section>
+</section>
+<section id="bar-plot" class="level2">
+<h2 class="anchored" data-anchor-id="bar-plot"><strong>Bar Plot</strong></h2>
+<p>This plot displays model-estimated mean depression scores across mood condition, shown separately for low and high neuroticism.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Traitsx interaction plot (bar + 95% CI)</span></span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This figure shows model-estimated mean depression scores across mood condition, separately for low vs. high Commitment, with 95% confidence intervals.</span></span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a>p_Warmth_bar <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
+<span id="cb89-5"><a href="#cb89-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>(<span class="fu">emmeans</span>(a1_Warmth, <span class="sc">~</span> condition <span class="sc">*</span> Commit_msplit)),  <span class="co"># cell means from the ANOVA model</span></span>
+<span id="cb89-6"><a href="#cb89-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
+<span id="cb89-7"><a href="#cb89-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> condition,        <span class="co"># x-axis = experimental condition</span></span>
+<span id="cb89-8"><a href="#cb89-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> emmean,          <span class="co"># y-axis = estimated mean depression score</span></span>
+<span id="cb89-9"><a href="#cb89-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> Commit_msplit    <span class="co"># fill color = commitment levels</span></span>
+<span id="cb89-10"><a href="#cb89-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb89-11"><a href="#cb89-11" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb89-12"><a href="#cb89-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(</span>
+<span id="cb89-13"><a href="#cb89-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.65</span>),  <span class="co"># place Low vs. High side-by-side</span></span>
+<span id="cb89-14"><a href="#cb89-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.55</span>,                              <span class="co"># width of each bar</span></span>
+<span id="cb89-15"><a href="#cb89-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"white"</span>                            <span class="co"># white outlines for visual separation</span></span>
+<span id="cb89-16"><a href="#cb89-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb89-17"><a href="#cb89-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(</span>
+<span id="cb89-18"><a href="#cb89-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
+<span id="cb89-19"><a href="#cb89-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">ymin =</span> lower.CL,   <span class="co"># lower bound of 95% CI</span></span>
+<span id="cb89-20"><a href="#cb89-20" aria-hidden="true" tabindex="-1"></a>      <span class="at">ymax =</span> upper.CL    <span class="co"># upper bound of 95% CI</span></span>
+<span id="cb89-21"><a href="#cb89-21" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb89-22"><a href="#cb89-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.65</span>),  <span class="co"># align error bars with bars</span></span>
+<span id="cb89-23"><a href="#cb89-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.12</span>,                              <span class="co"># width of error bar caps</span></span>
+<span id="cb89-24"><a href="#cb89-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">0.7</span>                            <span class="co"># thickness of error bars</span></span>
+<span id="cb89-25"><a href="#cb89-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb89-26"><a href="#cb89-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb89-27"><a href="#cb89-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Condition"</span>,        <span class="co"># x-axis label</span></span>
+<span id="cb89-28"><a href="#cb89-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Mean Trait Score"</span>, <span class="co"># y-axis label</span></span>
+<span id="cb89-29"><a href="#cb89-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"Commitment"</span>         <span class="co"># legend title</span></span>
+<span id="cb89-30"><a href="#cb89-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb89-31"><a href="#cb89-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(</span>
+<span id="cb89-32"><a href="#cb89-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="st">"Dark2"</span>            <span class="co"># colorblind-friendly fill colors</span></span>
+<span id="cb89-33"><a href="#cb89-33" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb89-34"><a href="#cb89-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb89-35"><a href="#cb89-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>                 <span class="co"># show all response scale values</span></span>
+<span id="cb89-36"><a href="#cb89-36" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb89-37"><a href="#cb89-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(</span>
+<span id="cb89-38"><a href="#cb89-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">7</span>)               <span class="co"># display full 1–7 scale without clipping bars</span></span>
+<span id="cb89-39"><a href="#cb89-39" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb89-40"><a href="#cb89-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(</span>
+<span id="cb89-41"><a href="#cb89-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_size =</span> <span class="dv">14</span>               <span class="co"># clean, publication-style theme</span></span>
+<span id="cb89-42"><a href="#cb89-42" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb89-43"><a href="#cb89-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-44"><a href="#cb89-44" aria-hidden="true" tabindex="-1"></a>p_Warmth_bar</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="relationship_study_files/figure-html/interaction_plot_bar1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Traitsx interaction plot (bar + 95% CI)</span></span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This figure shows model-estimated mean depression scores across mood condition, separately for low vs. high Commitment, with 95% confidence intervals.</span></span>
+<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a>p_Attractiveness_bar <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
+<span id="cb90-5"><a href="#cb90-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>(<span class="fu">emmeans</span>(a2_Attractiveness, <span class="sc">~</span> condition <span class="sc">*</span> Commit_msplit)),  <span class="co"># cell means from the ANOVA model</span></span>
+<span id="cb90-6"><a href="#cb90-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
+<span id="cb90-7"><a href="#cb90-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> condition,        <span class="co"># x-axis = experimental condition</span></span>
+<span id="cb90-8"><a href="#cb90-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> emmean,          <span class="co"># y-axis = estimated mean depression score</span></span>
+<span id="cb90-9"><a href="#cb90-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> Commit_msplit    <span class="co"># fill color = commitment levels</span></span>
+<span id="cb90-10"><a href="#cb90-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb90-11"><a href="#cb90-11" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb90-12"><a href="#cb90-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(</span>
+<span id="cb90-13"><a href="#cb90-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.65</span>),  <span class="co"># place Low vs. High side-by-side</span></span>
+<span id="cb90-14"><a href="#cb90-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.55</span>,                              <span class="co"># width of each bar</span></span>
+<span id="cb90-15"><a href="#cb90-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"white"</span>                            <span class="co"># white outlines for visual separation</span></span>
+<span id="cb90-16"><a href="#cb90-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb90-17"><a href="#cb90-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(</span>
+<span id="cb90-18"><a href="#cb90-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
+<span id="cb90-19"><a href="#cb90-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">ymin =</span> lower.CL,   <span class="co"># lower bound of 95% CI</span></span>
+<span id="cb90-20"><a href="#cb90-20" aria-hidden="true" tabindex="-1"></a>      <span class="at">ymax =</span> upper.CL    <span class="co"># upper bound of 95% CI</span></span>
+<span id="cb90-21"><a href="#cb90-21" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb90-22"><a href="#cb90-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.65</span>),  <span class="co"># align error bars with bars</span></span>
+<span id="cb90-23"><a href="#cb90-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.12</span>,                              <span class="co"># width of error bar caps</span></span>
+<span id="cb90-24"><a href="#cb90-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">0.7</span>                            <span class="co"># thickness of error bars</span></span>
+<span id="cb90-25"><a href="#cb90-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb90-26"><a href="#cb90-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb90-27"><a href="#cb90-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Condition"</span>,        <span class="co"># x-axis label</span></span>
+<span id="cb90-28"><a href="#cb90-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Mean Trait Score"</span>, <span class="co"># y-axis label</span></span>
+<span id="cb90-29"><a href="#cb90-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"Commitment"</span>         <span class="co"># legend title</span></span>
+<span id="cb90-30"><a href="#cb90-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb90-31"><a href="#cb90-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(</span>
+<span id="cb90-32"><a href="#cb90-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="st">"Dark2"</span>            <span class="co"># colorblind-friendly fill colors</span></span>
+<span id="cb90-33"><a href="#cb90-33" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb90-34"><a href="#cb90-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb90-35"><a href="#cb90-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>                 <span class="co"># show all response scale values</span></span>
+<span id="cb90-36"><a href="#cb90-36" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb90-37"><a href="#cb90-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(</span>
+<span id="cb90-38"><a href="#cb90-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">7</span>)               <span class="co"># display full 1–7 scale without clipping bars</span></span>
+<span id="cb90-39"><a href="#cb90-39" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb90-40"><a href="#cb90-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(</span>
+<span id="cb90-41"><a href="#cb90-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_size =</span> <span class="dv">14</span>               <span class="co"># clean, publication-style theme</span></span>
+<span id="cb90-42"><a href="#cb90-42" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb90-43"><a href="#cb90-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-44"><a href="#cb90-44" aria-hidden="true" tabindex="-1"></a>p_Attractiveness_bar</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="relationship_study_files/figure-html/interaction_plot_bar2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="save-plot" class="level5">
+<h5 class="anchored" data-anchor-id="save-plot">Save Plot</h5>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create figures folder if needed</span></span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">"figures"</span>)) <span class="fu">dir.create</span>(<span class="st">"figures"</span>)</span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Save whichever plots you want (SVG format for posters)</span></span>
+<span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"figures/Warmth_bar_plot.svg"</span>,   <span class="at">plot =</span> p_Warmth_bar,   <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create figures folder if needed</span></span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">"figures"</span>)) <span class="fu">dir.create</span>(<span class="st">"figures"</span>)</span>
+<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-4"><a href="#cb92-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Save whichever plots you want (SVG format for posters)</span></span>
+<span id="cb92-5"><a href="#cb92-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"figures/Attractiveness_bar_plot.svg"</span>,   <span class="at">plot =</span> p_Attractiveness_bar,   <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
