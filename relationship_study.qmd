@@ -1,0 +1,885 @@
+---
+title: "relationship_pursuit_study"
+author: Milena Chobanyan
+format: html
+editor: visual
+html:
+  theme: flatly
+  toc: TRUE
+  toc-title: "Report Sections"
+  toc-depth: 2
+  toc-location: left
+  number-selections: FALSE
+  code-fold: TRUE
+  code-summary: "Show code"
+  code-tools: TRUE
+  df-print: paged
+  highlight-style: tango
+  embed-resources: TRUE
+  smooth-scroll: TRUE
+---
+
+## Preparing Report
+
+```{r}
+#| label: setup
+#| echo: false
+#| message: false
+#| warning: false
+
+# Set global chunk options for the entire document
+knitr::opts_chunk$set(
+  echo = TRUE,      # display code in output
+  message = FALSE,  # suppress package messages
+  warning = FALSE   # suppress warnings
+)
+
+# Prevent automatic conversion of strings to factors
+options(stringsAsFactors = FALSE)  # keep character variables as text
+```
+
+## Introduction
+
+The goal is to convert the raw data-set into an analysis-ready dataset by loading data, defining variables, cleaning responses, and constructing a scale score.
+
+## Software Installations
+
+```{r}
+#| label: packages
+#| echo: true
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(psych)  
+library(afex) 
+library(emmeans) 
+library(svglite)
+```
+
+## Uploading Data
+
+```{r}
+data <- read.csv("data/relationship_pursuit_copy.csv")
+```
+
+```{r}
+data <- data %>%
+  rename(check = Q8)
+```
+
+```{r}
+names(data)
+```
+
+```{r}
+# filter out ppl who didn't answer commit questions
+data <- data %>%
+  filter(if_all(check:condition, ~ !is.na(.)))
+```
+
+```{r}
+head(data)
+dim(data)
+```
+
+```{r}
+names(data)
+```
+
+## Variable Preparation and Scale Construction
+
+##### Define the Study Variable List
+
+```{r}
+#| label: define_vars
+#| echo: true
+#| message: false
+#| warning: false
+
+# Create a vector of variables included in the study
+study_vars <- c(
+  "condition",
+  "check",
+  "sex",       # participant sex
+  "age",       # participant age
+  "Commit_1","Commit_2","Commit_3","Commit_4","Commit_5","Commit_6","Commit_7","Commit_8",  # Commitment items
+  "Long_Term_Traits_1","Long_Term_Traits_2","Long_Term_Traits_3","Long_Term_Traits_4","Long_Term_Traits_5","Long_Term_Traits_6","Long_Term_Traits_7","Long_Term_Traits_8","Long_Term_Traits_9","Long_Term_Traits_10",  # Long-term items
+  "Short_Term_Traits_1","Short_Term_Traits_2","Short_Term_Traits_3","Short_Term_Traits_4","Short_Term_Traits_5","Short_Term_Traits_6","Short_Term_Traits_7","Short_Term_Traits_8","Short_Term_Traits_9","Short_Term_Traits_10" # Short-term items
+)
+
+# Check the number of variables in the list
+length(study_vars)  # confirms total number matches expected count
+```
+
+##### Creating analysis dataset
+
+```{r}
+#| label: prepare_data
+#| echo: true
+#| message: false
+#| warning: false
+
+# Convert all variables to numeric format
+data <- data %>% #and then
+  mutate(across(Long_Term_Traits_1:Commit_8, as.numeric))  # ensures numeric type for all variables
+
+# Summarize dataset to confirm conversion
+summary(data)  # checks values and missing data - remove for final report
+```
+
+**Label the experimental condition**
+
+```{r}
+#| label: label_condition
+#| echo: true
+#| message: false
+#| warning: false
+
+# Convert condition variable to labeled factor
+table(data$condition)
+```
+
+```{r}
+#| label: label_sex
+#| echo: true
+#| message: false
+#| warning: false
+
+# Convert condition variable to labeled factor
+data <- data %>%
+  mutate(
+    sex = factor(
+      sex,                     # original numeric variable
+      levels = c(1, 2, 3),             # original coding
+      labels = c("Other", "Female", "Other")  # readable labels
+    )
+  )
+
+# Verify condition counts
+data %>%
+  count(sex)  # counts observations in each condition
+```
+
+------------------------------------------------------------------------
+
+##### Creating Participant ID
+
+```{r}
+#| label: create_id
+#| echo: true
+#| message: false
+#| warning: false
+
+# Create a unique ID for each participant
+data <- data %>%
+  mutate(id = row_number())  # assigns sequential ID values
+
+# Preview the ID variable
+data %>% select(id) %>% head()  # confirms ID structure
+```
+
+##### Reverse Coding
+
+```{r}
+#| label: reverse_code_Commit
+#| echo: true
+#| message: false
+#| warning: false
+
+# Reverse-code selected commitment items
+data <- data %>%
+  mutate(
+    Commit_2r  = 8 - Commit_2,   # reverse-codes Commit_2
+    Commit_4r  = 8 - Commit_4,   # reverse-codes Commit_4
+    Commit_6r = 8 - Commit_6,  # reverse-codes Commit_6
+    Commit_8r = 8 - Commit_8   # reverse-codes Commit_8
+  )
+
+# Compare original and reversed values
+data %>%
+  select(Commit_4, Commit_4r) %>%  # selects variables for comparison
+  head()  # displays first rows
+```
+
+```{r}
+#| label: reverse_code_Long_Term_Traits
+#| echo: true
+#| message: false
+#| warning: false
+
+# Reverse-code selected long term items so that higher score means higher emphasis on trustworthiness
+data <- data %>%
+  mutate(
+    Long_Term_Traits_3r  = 8 - Long_Term_Traits_3,   # reverse-codes Long_Term_Traits3
+    Long_Term_Traits_4r  = 8 - Long_Term_Traits_4,   # reverse-codes Long_Term_Traits4
+    Long_Term_Traits_6r = 8 - Long_Term_Traits_6,  # reverse-codes Long_Term_Traits6
+    Long_Term_Traits_7r = 8 - Long_Term_Traits_7,   # reverse-codes Long_Term_Traits7
+    Long_Term_Traits_10r = 8 - Long_Term_Traits_10 # reverse-codes Long_Term_Traits10
+  )
+
+# Compare original and reversed values
+data %>%
+  select(Long_Term_Traits_3, Long_Term_Traits_3r) %>%  # selects variables for comparison
+  head()  # displays first rows
+```
+
+```{r}
+#| label: reverse_code_Short_Term_Traits
+#| echo: true
+#| message: false
+#| warning: false
+
+# Reverse-code selected short term items so that higher score means higher emphasis on trustworthiness
+data <- data %>%
+  mutate(
+    Short_Term_Traits_3r  = 8 - Short_Term_Traits_3,   # reverse-codes Short_Term_Traits3
+    Short_Term_Traits_4r  = 8 - Short_Term_Traits_4,   # reverse-codes Short_Term_Traits4
+    Short_Term_Traits_6r = 8 - Short_Term_Traits_6,  # reverse-codes Short_Term_Traits6
+    Short_Term_Traits_7r = 8 - Short_Term_Traits_7,   # reverse-codes Short_Term_Traits7
+    Short_Term_Traits_10r = 8 - Short_Term_Traits_10 # reverse-codes Short_Term_Traits10
+  )
+
+# Compare original and reversed values
+data %>%
+  select(Short_Term_Traits_3, Short_Term_Traits_3r) %>%  # selects variables for comparison
+  head()  # displays first rows
+```
+
+##### Defining Scales
+
+```{r}
+#| label: define_scale_Commit
+#| echo: true
+#| message: false
+#| warning: false
+
+# Define commitment scale items
+Commit_items <- c(
+  "Commit_1","Commit_2r","Commit_3","Commit_4r","Commit_5","Commit_6r","Commit_7","Commit_8r"
+)
+
+# Check that all items exist in dataset
+setNames(Commit_items %in% names(data), Commit_items)  # verifies item presence
+```
+
+```{r}
+#| label: mutate_Trait_NAs
+#| echo: true
+#| message: false
+#| warning: false
+
+data <- data %>%
+  mutate(across(contains("Traits"), ~coalesce(., 0)))
+```
+
+```{r}
+#| label: mutate_combine_Traits1-10
+#| echo: true
+#| message: false
+#| warning: false
+
+data <- data %>%
+  mutate(
+    Trait_1_Total  = Long_Term_Traits_1  + Short_Term_Traits_1,
+    Trait_2_Total  = Long_Term_Traits_2  + Short_Term_Traits_2,
+    Trait_3_Total  = Long_Term_Traits_3  + Short_Term_Traits_3,
+    Trait_4_Total  = Long_Term_Traits_4  + Short_Term_Traits_4,
+    Trait_5_Total  = Long_Term_Traits_5  + Short_Term_Traits_5,
+    Trait_6_Total  = Long_Term_Traits_6  + Short_Term_Traits_6,
+    Trait_7_Total  = Long_Term_Traits_7  + Short_Term_Traits_7,
+    Trait_8_Total  = Long_Term_Traits_8  + Short_Term_Traits_8,
+    Trait_9_Total  = Long_Term_Traits_9  + Short_Term_Traits_9,
+    Trait_10_Total = Long_Term_Traits_10 + Short_Term_Traits_10
+  )
+```
+
+```{r}
+#| label: define_warmth_items
+#| echo: true
+#| message: false
+#| warning: false
+
+# Define commitment scale items
+Warmth_items <- c(
+  "Trait_1_Total", "Trait_2_Total", "Trait_5_Total", "Trait_8_Total", "Trait_9_Total"
+)
+
+# Check that all items exist in dataset
+setNames(Warmth_items %in% names(data), Warmth_items)  # verifies item presence
+```
+
+```{r}
+#| label: define_attractiveness_items
+#| echo: true
+#| message: false
+#| warning: false
+
+# Define commitment scale items
+Attractiveness_items <- c(
+  "Trait_3_Total", "Trait_4_Total", "Trait_6_Total", "Trait_7_Total", "Trait_10_Total"
+)
+
+# Check that all items exist in dataset
+setNames(Attractiveness_items %in% names(data), Attractiveness_items)  # verifies item presence
+```
+
+##### Computing Scale Scores and Scale Variables
+
+```{r}
+#| label: compute_scale_Commit
+#| echo: true
+#| message: false
+#| warning: false
+
+# Compute commitment scale as the row mean of items
+data <- data %>%
+  mutate(
+    Commit_scale = rowMeans(as.matrix(across(all_of(Commit_items))), na.rm = TRUE)  # calculates scale score
+  )
+
+# Check proportion of missing scale scores
+mean(is.na(data$Commit_scale))  # should be close to 0
+
+# Check distribution and range of the scale
+summary(data$Commit_scale)  # should fall within expected range
+```
+
+```{r}
+#| label: compute_scale_Wamrth
+#| echo: true
+#| message: false
+#| warning: false
+
+# Compute long term scale as the row mean of items
+data <- data %>%
+  mutate(
+    Warmth_scale = rowMeans(as.matrix(across(all_of(Warmth_items))), na.rm = TRUE)  # calculates scale score
+  )
+
+# Check proportion of missing scale scores
+mean(is.na(data$Warmth_scale))  # should be close to 0
+
+# Check distribution and range of the scale
+summary(data$Warmth_scale)  # should fall within expected range
+```
+
+```{r}
+#| label: compute_scale_Attractiveness
+#| echo: true
+#| message: false
+#| warning: false
+
+# Compute long term scale as the row mean of items
+data <- data %>%
+  mutate(
+    Attractiveness_scale = rowMeans(as.matrix(across(all_of(Attractiveness_items))), na.rm = TRUE)  # calculates scale score
+  )
+
+# Check proportion of missing scale scores
+mean(is.na(data$Attractiveness_scale))  # should be close to 0
+
+# Check distribution and range of the scale
+summary(data$Attractiveness_scale)  # should fall within expected range
+```
+
+##### Final Check
+
+```{r}
+#| label: final_check
+#| echo: true
+#| message: false
+#| warning: false
+
+# Check dataset dimensions
+dim(data)  # confirms number of rows and columns
+
+# Check final variable names
+names(data)  # confirms variables available for next steps
+```
+
+##### Computing Median of Each Scale
+
+```{r}
+#| label: compute_Commit_median
+#| echo: true
+#| warning: false
+#| message: false
+
+# Compute the median value of the Commit scale
+median(data$Commit_scale, na.rm = TRUE)
+```
+
+```{r}
+#| label: compute_Warmth_median
+#| echo: true
+#| warning: false
+#| message: false
+
+# Compute the median value of the Short Term scale
+median(data$Warmth_scale, na.rm = TRUE)
+```
+
+```{r}
+#| label: compute_Attractiveness_median
+#| echo: true
+#| warning: false
+#| message: false
+
+# Compute the median value of the Short Term scale
+median(data$Attractiveness_scale, na.rm = TRUE)
+```
+
+##### Creating Split Variables
+
+```{r}
+#| label: create_Commit_split
+#| echo: true
+#| warning: false
+#| message: false
+
+# Compute the median of the Commit scale
+Commit_median <- median(data$Commit_scale, na.rm = TRUE)
+
+# Add a new categorical variable based on the median split
+data <- data %>%
+  mutate(
+    # Classify scores at or below the median as "Low" and above the median as "High"
+    Commit_msplit = if_else(Commit_scale <= Commit_median, "Low", "High") %>%
+      # Convert to a factor with "Low" as the reference level
+      factor(levels = c("Low", "High"))
+  )
+```
+
+```{r}
+#| label: create_Warmth_split
+#| echo: true
+#| warning: false
+#| message: false
+
+# Compute the median of the Short Term scale
+Warmth_median <- median(data$Warmth_scale, na.rm = TRUE)
+
+# Add a new categorical variable based on the median split
+data <- data %>%
+  mutate(
+    # Classify scores at or below the median as "Low" and above the median as "High"
+    Warmth_msplit = if_else(Warmth_scale <= Warmth_median, "Low", "High") %>%
+      # Convert to a factor with "Low" as the reference level
+      factor(levels = c("Low", "High"))
+  )
+```
+
+```{r}
+#| label: create_Attractiveness_split
+#| echo: true
+#| warning: false
+#| message: false
+
+# Compute the median of the Short Term scale
+Attractiveness_median <- median(data$Attractiveness_scale, na.rm = TRUE)
+
+# Add a new categorical variable based on the median split
+data <- data %>%
+  mutate(
+    # Classify scores at or below the median as "Low" and above the median as "High"
+    Attractiveness_msplit = if_else(Attractiveness_scale <= Attractiveness_median, "Low", "High") %>%
+      # Convert to a factor with "Low" as the reference level
+      factor(levels = c("Low", "High"))
+  )
+```
+
+##### Inspecting Split Classifications
+
+```{r}
+#| label: check_Commit_split
+#| echo: true
+#| warning: false
+#| message: false
+
+# Preview the continuous Commit scores alongside the new group labels
+data %>%
+  select(Commit_scale, Commit_msplit) %>%  # Keep only the scale and split variables
+  head(10) %>%                      # Show the first 10 rows
+  knitr::kable()                   # Format as a table for display
+
+# Count the number of participants in each Commit group
+data %>%
+  count(Commit_msplit) %>%            # Count observations in each group
+  knitr::kable()                  # Format as a table for display
+```
+
+```{r}
+#| label: check_Warmth_split
+#| echo: true
+#| warning: false
+#| message: false
+
+# Preview the continuous Short Term scores alongside the new group labels
+data %>%
+  select(Warmth_scale, Warmth_msplit) %>%  # Keep only the scale and split variables
+  head(10) %>%                      # Show the first 10 rows
+  knitr::kable()                   # Format as a table for display
+
+# Count the number of participants in each Short Term group
+data %>%
+  count(Warmth_msplit) %>%            # Count observations in each group
+  knitr::kable()                  # Format as a table for display
+```
+
+```{r}
+#| label: check_Attractiveness_split
+#| echo: true
+#| warning: false
+#| message: false
+
+# Preview the continuous Short Term scores alongside the new group labels
+data %>%
+  select(Attractiveness_scale, Attractiveness_msplit) %>%  # Keep only the scale and split variables
+  head(10) %>%                      # Show the first 10 rows
+  knitr::kable()                   # Format as a table for display
+
+# Count the number of participants in each Short Term group
+data %>%
+  count(Attractiveness_msplit) %>%            # Count observations in each group
+  knitr::kable()                  # Format as a table for display
+```
+
+##### **Compute internal consistency (alpha and omega)**
+
+```{r}
+# Create item-only data frames for each scale
+Commit_item_df <- data %>% select(all_of(Commit_items))
+Warmth_item_df <- data %>% select(all_of(Warmth_items))
+Attractiveness_item_df <- data %>% select(all_of(Attractiveness_items))
+
+# Compute internal consistency estimates (store results)
+Commit_alpha <- psych::alpha(Commit_item_df)
+Commit_omega <- psych::omega(Commit_item_df, plot = FALSE)
+
+Warmth_alpha <- psych::alpha(Warmth_item_df)
+Warmth_omega <- psych::omega(Warmth_item_df, plot = FALSE)
+
+Attractiveness_alpha <- psych::alpha(Attractiveness_item_df)
+Attractiveness_omega <- psych::omega(Attractiveness_item_df, plot = FALSE)
+
+# Print only alpha and omega coefficients
+tibble(
+  scale = c("Commit", "Warmth", "Attractiveness"),
+  alpha = c(
+    Commit_alpha$total$raw_alpha,
+    Warmth_alpha$total$raw_alpha,
+    Attractiveness_alpha$total$raw_alpha
+  ),
+  omega = c(
+    Commit_omega$omega.tot,
+    Warmth_alpha$total$raw_alpha,
+    Attractiveness_alpha$total$raw_alpha
+  )
+)
+```
+
+***In the output, locate and record:***
+
+- ***Cronbach’s alpha (α)***
+- ***McDonald’s omega (ω)***
+
+------------------------------------------------------------------------
+
+**Descriptive Statistics (Continuous Variables)**
+
+```{r}
+#| label: descriptives_continuous
+#| echo: true
+#| warning: false
+#| message: false
+
+# Descriptive statistics for continuous scale variables
+psych::describe(
+  data %>% select(Commit_scale, Warmth_scale, Attractiveness_scale)
+) %>%
+  knitr::kable(digits = 2)
+```
+
+**Run descriptives for categorical variables**
+
+*Categorical variables are summarized using counts rather than means.*
+
+```{r}
+#| label: descriptives_categorical_condition
+#| echo: true
+#| warning: false
+#| message: false
+
+# Count participants by condition
+data %>%
+  count(condition) %>%
+  knitr::kable()
+```
+
+**Convert counts to percentages**
+
+*Percentages make group composition easier to interpret than raw counts.*
+
+```{r}
+#| label: categorical_percentages_condition
+#| echo: true
+#| warning: false
+#| message: false
+
+# Convert counts to percentages
+data %>%
+  count(condition) %>%
+  mutate(percent = round(100 * n / sum(n), 1)) %>%
+  knitr::kable()
+```
+
+**Run the ANOVA for DV**
+
+*Mood Condition is coded as 0 = Negative and 1 = Positive, and Neuroticism is coded as Low vs. High, as defined during data preparation.*
+
+```{r}
+#| label: anova_model1
+#| echo: true
+#| warning: false
+#| message: false
+
+# 2x2 between-subjects ANOVA predicting Warmth scores
+# DV: Warmth_scale
+# Factors: condition and Commit_msplit
+a1_Warmth <- afex::aov_ez(
+  data = data,
+  id = "id",
+  dv = "Warmth_scale",
+  between = c("condition", "Commit_msplit")
+)
+
+# Print the ANOVA table
+a1_Warmth
+```
+
+```{r}
+#| label: anova_model2
+#| echo: true
+#| warning: false
+#| message: false
+
+# 2x2 between-subjects ANOVA predicting Attractiveness scores
+# DV: Attractiveness_scale
+# Factors: condition and Commit_msplit
+a2_Attractiveness <- afex::aov_ez(
+  data = data,
+  id = "id",
+  dv = "Attractiveness_scale",
+  between = c("condition", "Commit_msplit")
+)
+
+# Print the ANOVA table
+a2_Attractiveness
+```
+
+*Identify the F statistic, numerator and denominator degrees of freedom, p-value, and generalized eta-squared for each effect.*
+
+------------------------------------------------------------------------
+
+### Inspect marginal (overall) means and confidence intervals (Main effects / “group means”)
+
+*In this step, you will examine group means and confidence intervals to determine the direction of effects tested in the ANOVA.*
+
+```{r}
+#| label: marginal_means
+#| echo: true
+#| warning: false
+#| message: false
+
+# Marginal (group) means for mood condition
+# Averaged across levels of neuroticism
+emmeans(a1_Warmth, ~ condition)
+
+# Marginal (group) means for neuroticism
+# Averaged across levels of mood condition
+emmeans(a1_Warmth, ~ Commit_msplit)
+```
+
+```{r}
+#| label: marginal_means2
+#| echo: true
+#| warning: false
+#| message: false
+
+# Marginal (group) means for mood condition
+# Averaged across levels of neuroticism
+emmeans(a2_Attractiveness, ~ condition)
+
+# Marginal (group) means for neuroticism
+# Averaged across levels of mood condition
+emmeans(a2_Attractiveness, ~ Commit_msplit)
+```
+
+***Locate the marginal (overall) means and confidence intervals.***
+
+------------------------------------------------------------------------
+
+### Inspect cell means and confidence intervals (Interaction Means)
+
+```{r}
+#| label: cell_means
+#| echo: true
+#| warning: false
+#| message: false
+
+# Raw estimated marginal means
+emmeans(a1_Warmth, ~ condition * Commit_msplit)
+```
+
+```{r}
+#| label: cell_means2
+#| echo: true
+#| warning: false
+#| message: false
+
+# Raw estimated marginal means
+emmeans(a2_Attractiveness, ~ condition * Commit_msplit)
+```
+
+Inspect the output: all condition × group combinations are present
+
+means and confidence intervals are displayed
+
+------------------------------------------------------------------------
+
+## **Bar Plot**
+
+This plot displays model-estimated mean depression scores across mood condition, shown separately for low and high neuroticism.
+
+```{r}
+#| label: interaction_plot_bar1
+#| echo: true
+#| warning: false
+#| message: false
+
+# Traitsx interaction plot (bar + 95% CI)
+# This figure shows model-estimated mean depression scores across mood condition, separately for low vs. high Commitment, with 95% confidence intervals.
+
+p_Warmth_bar <- ggplot(
+  as.data.frame(emmeans(a1_Warmth, ~ condition * Commit_msplit)),  # cell means from the ANOVA model
+  aes(
+    x = condition,        # x-axis = experimental condition
+    y = emmean,          # y-axis = estimated mean depression score
+    fill = Commit_msplit    # fill color = commitment levels
+  )
+) +
+  geom_col(
+    position = position_dodge(width = 0.65),  # place Low vs. High side-by-side
+    width = 0.55,                              # width of each bar
+    color = "white"                            # white outlines for visual separation
+  ) +
+  geom_errorbar(
+    aes(
+      ymin = lower.CL,   # lower bound of 95% CI
+      ymax = upper.CL    # upper bound of 95% CI
+    ),
+    position = position_dodge(width = 0.65),  # align error bars with bars
+    width = 0.12,                              # width of error bar caps
+    linewidth = 0.7                            # thickness of error bars
+  ) +
+  labs(
+    x = "Condition",        # x-axis label
+    y = "Mean Trait Score", # y-axis label
+    fill = "Commitment"         # legend title
+  ) +
+  scale_fill_brewer(
+    palette = "Dark2"            # colorblind-friendly fill colors
+  ) +
+  scale_y_continuous(
+    breaks = 1:7                 # show all response scale values
+  ) +
+  coord_cartesian(
+    ylim = c(1, 7)               # display full 1–7 scale without clipping bars
+  ) +
+  theme_classic(
+    base_size = 14               # clean, publication-style theme
+  )
+
+print(p_Warmth_bar)
+```
+
+```{r}
+#| label: interaction_plot_bar2
+#| echo: true
+#| warning: false
+#| message: false
+
+# Traitsx interaction plot (bar + 95% CI)
+# This figure shows model-estimated mean depression scores across mood condition, separately for low vs. high Commitment, with 95% confidence intervals.
+
+p_Attractiveness_bar <- ggplot(
+  as.data.frame(emmeans(a2_Attractiveness, ~ condition * Commit_msplit)),  # cell means from the ANOVA model
+  aes(
+    x = condition,        # x-axis = experimental condition
+    y = emmean,          # y-axis = estimated mean depression score
+    fill = Commit_msplit    # fill color = commitment levels
+  )
+) +
+  geom_col(
+    position = position_dodge(width = 0.65),  # place Low vs. High side-by-side
+    width = 0.55,                              # width of each bar
+    color = "white"                            # white outlines for visual separation
+  ) +
+  geom_errorbar(
+    aes(
+      ymin = lower.CL,   # lower bound of 95% CI
+      ymax = upper.CL    # upper bound of 95% CI
+    ),
+    position = position_dodge(width = 0.65),  # align error bars with bars
+    width = 0.12,                              # width of error bar caps
+    linewidth = 0.7                            # thickness of error bars
+  ) +
+  labs(
+    x = "Condition",        # x-axis label
+    y = "Mean Trait Score", # y-axis label
+    fill = "Commitment"         # legend title
+  ) +
+  scale_fill_brewer(
+    palette = "Dark2"            # colorblind-friendly fill colors
+  ) +
+  scale_y_continuous(
+    breaks = 1:7                 # show all response scale values
+  ) +
+  coord_cartesian(
+    ylim = c(1, 7)               # display full 1–7 scale without clipping bars
+  ) +
+  theme_classic(
+    base_size = 14               # clean, publication-style theme
+  )
+
+print(p_Attractiveness_bar)
+```
+
+##### Save Plot
+
+```{r}
+#| label: save_figure_warmth
+#| echo: true
+#| warning: false
+#| message: false
+
+# Create figures folder if needed
+if (!dir.exists("figures")) dir.create("figures")
+
+# Save whichever plots you want (SVG format for posters)
+ggsave("figures/Warmth_bar_plot.svg",   plot = p_Warmth_bar,   width = 7, height = 5)
+```
+
+```{r}
+#| label: save_figure_attractiveness
+#| echo: true
+#| warning: false
+#| message: false
+
+# Create figures folder if needed
+if (!dir.exists("figures")) dir.create("figures")
+
+# Save whichever plots you want (SVG format for posters)
+ggsave("figures/Attractiveness_bar_plot.svg",   plot = p_Attractiveness_bar,   width = 7, height = 5)
+```
